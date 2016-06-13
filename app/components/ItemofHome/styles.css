@@ -1,0 +1,23 @@
+.right{
+  float: right;
+  font-size: 14px;
+  color:#aaa;
+}
+.fontsize{
+  font-size: 14px;
+  color:#aaa;
+}
+.middle{
+  font-size:14px;
+}
+.strong{
+  font-size: 18px;
+}
+.position{
+  right:0px;
+  float:right;
+  margin-left: 140px;
+}
+.thumbnail{
+  margin-bottom: 0px;
+}

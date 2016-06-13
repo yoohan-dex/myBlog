@@ -3,9 +3,11 @@
  * If we were to do this in store.js, reducers wouldn't be hot reloadable.
  */
 
-import { combineReducers } from 'redux-immutable';
 import { fromJS } from 'immutable';
+import { combineReducers } from 'redux-immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
+
+
 
 /*
  * routeReducer
@@ -38,9 +40,11 @@ function routeReducer(state = routeInitialState, action) {
 /**
  * Creates the main reducer with the asynchronously loaded ones
  */
+import registerReducer from 'containers/Register/reducer';
 export default function createReducer(asyncReducers) {
   return combineReducers({
     route: routeReducer,
+    register: registerReducer,
     ...asyncReducers,
   });
 }

@@ -10,12 +10,29 @@
  */
 
 import React from 'react';
+import { Router, Route, } from 'react-router';
+import { Grid, Row, Col} from 'react-bootstrap';
+
+
+import NavBar from '../../components/NavBar';
+
+import LeftofHome from '../../components/LeftofHome';
+import JumbotronofHome from '../../components/JumbotronofHome';
+import ItemofHome from '../../components/ItemofHome';
+import RightofHome from '../../components/RightofHome';
+
 
 export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   render() {
     return (
-      <h1>This is the Homepage!</h1>
+         <LeftofHome>
+            <h4>latest feed</h4>
+            <hr/>
+            {console.log(this.props.posts)}
+            <ItemofHome _id='hoo'/>
+            <ItemofHome _id='hooo'/>
+         </LeftofHome>     
     );
   }
 }

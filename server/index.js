@@ -1,6 +1,7 @@
 /* eslint consistent-return:0 */
 
 const express = require('express');
+const path = require('path');
 const logger = require('./logger');
 const ngrok = require('ngrok');
 
@@ -9,7 +10,7 @@ const isDev = process.env.NODE_ENV !== 'production';
 const useTunnel = isDev && process.env.ENABLE_TUNNEL;
 
 const app = express();
-
+app.use(express.static(path.resolve(__dirname, '../app/static')));
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
 
@@ -20,7 +21,7 @@ const webpackConfig = isDev
 
 app.use(frontend(webpackConfig));
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3333;
 
 // Start your app.
 app.listen(port, (err) => {

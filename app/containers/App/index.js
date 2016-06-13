@@ -12,9 +12,17 @@
  */
 
 import React from 'react';
+import { Grid, Row, Col} from 'react-bootstrap';
+
+
+import NavBar from '../../components/NavBar';
+import RegisterBox from '../../components/RegisterBox';
 
 export default class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  constructor(props){
+    super(props);
 
+  }
   static propTypes = {
     children: React.PropTypes.node,
   };
@@ -22,7 +30,23 @@ export default class App extends React.Component { // eslint-disable-line react/
   render() {
     return (
       <div>
-        {this.props.children}
+
+        <NavBar/>
+        
+          <Grid>
+            <Row>
+              <Col md={12} xs={12}>
+              
+                {this.props.children}
+
+              </Col>
+            </Row>
+          </Grid>
+        
+
+
+
+
       </div>
     );
   }
