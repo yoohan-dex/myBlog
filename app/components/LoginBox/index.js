@@ -9,7 +9,10 @@ import { Row, Col, FormGroup, ControlLabel, FormControl, Checkbox, Button} from 
 import styles from './styles.css';
 
 class LoginBox extends React.Component {
- 
+  constructor(){
+    super();
+    this._LoginSubmit = this._LoginSubmit.bind(this);
+  }
   render() {
     return (
       <div ClassName={styles.formbox}>
@@ -17,12 +20,12 @@ class LoginBox extends React.Component {
           <Col md={4} mdOffset={4}>
             <h3>Login</h3>
             <hr/>
-            <form action="">
+            <form onSubmit={this._LoginSubmit}>
               <FormGroup controlId="register-username">
                 <ControlLabel>Username</ControlLabel>
                 <FormControl type="text" 
                 placehold="input your name"
-                
+                onChange = {this.props.onChangeUsername}
                 />
               </FormGroup>
               
@@ -30,7 +33,7 @@ class LoginBox extends React.Component {
                 <ControlLabel>Password</ControlLabel>
                 <FormControl type="password" 
                 placehold="input your password"
-                
+                onChange = {this.props.onChangePassword}
                 />
               </FormGroup>
               <FormGroup>
@@ -48,7 +51,10 @@ class LoginBox extends React.Component {
     );
   }
 
- 
+_LoginSubmit(evt){
+  evt.preventDefault();
+  this.props.onLoginSubmit(this.props.username,this.props.password)
+} 
 
 }
 

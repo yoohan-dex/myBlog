@@ -19,56 +19,91 @@ export default function createRoutes(store) {
   return [
     {
       path: '/',
-      name: 'home',
+      name: 'homePage',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
+          System.import('containers/HomePage/reducer'),
+          System.import('containers/HomePage/sagas'),
           System.import('containers/HomePage'),
         ]);
 
         const renderRoute = loadModule(cb);
 
-        importModules.then(([component]) => {
-          renderRoute(component);
-        });
-
-        importModules.catch(errorLoading);
-      },
-    },  {
-      path: '/about',
-      getComponent(location, cb) {
-        System.import('components/RegisterBox')
-          .then(loadModule(cb))
-          .catch(errorLoading);
-      },
-    }, {
-      path: '/logino',
-      getComponent(location, cb) {
-        System.import('components/LoginBox')
-          .then(loadModule(cb))
-          .catch(errorLoading);
-      },
-    },    {
-      path: '/register',
-      name: 'register',
-      getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          System.import('containers/Register/reducer'),
-          System.import('containers/Register/sagas'),
-          System.import('containers/Register'),
-        ]);
-
-        const renderRoute = loadModule(cb);
-
         importModules.then(([reducer, sagas, component]) => {
-          injectReducer('register', reducer.default);
+          injectReducer('homePage', reducer.default);
           injectSagas(sagas.default);
           renderRoute(component);
         });
 
         importModules.catch(errorLoading);
       },
-    }, {
+      indexRoute:{
+          name: 'homeItemPage',
+          getComponent(nextState, cb) {
+            const importModules = Promise.all([
+              System.import('containers/HomeItemPage/reducer'),
+              System.import('containers/HomeItemPage/sagas'),
+              System.import('containers/HomeItemPage'),
+            ]);
+
+            const renderRoute = loadModule(cb);
+
+            importModules.then(([reducer, sagas, component]) => {
+              injectReducer('homeItemPage', reducer.default);
+              injectSagas(sagas.default);
+              renderRoute(component);
+            });
+
+            importModules.catch(errorLoading);
+          },
+        },
+      childRoutes:[
+      {
+        path: '/register',
+        name: 'register',
+        getComponent(nextState, cb) {
+          const importModules = Promise.all([
+            System.import('containers/Register/reducer'),
+            System.import('containers/Register/sagas'),
+            System.import('containers/Register'),
+          ]);
+
+          const renderRoute = loadModule(cb);
+
+          importModules.then(([reducer, sagas, component]) => {
+            injectReducer('register', reducer.default);
+            injectSagas(sagas.default);
+            renderRoute(component);
+          });
+
+          importModules.catch(errorLoading);
+        },
+      },{
+        path: '/login',
+        name: 'login',
+        getComponent(nextState, cb) {
+          const importModules = Promise.all([
+            System.import('containers/Login/reducer'),
+            System.import('containers/Login/sagas'),
+            System.import('containers/Login'),
+          ]);
+
+          const renderRoute = loadModule(cb);
+
+          importModules.then(([reducer, sagas, component]) => {
+            injectReducer('login', reducer.default);
+            injectSagas(sagas.default);
+            renderRoute(component);
+          });
+
+          importModules.catch(errorLoading);
+        },
+      },],
+    },  {
       path: '*',
+
+
+
 
 
 

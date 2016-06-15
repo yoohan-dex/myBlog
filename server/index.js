@@ -21,7 +21,7 @@ const webpackConfig = isDev
 
 app.use(frontend(webpackConfig));
 
-const port = process.env.PORT || 3333;
+const port = process.env.PORT || 3000;
 
 // Start your app.
 app.listen(port, (err) => {

@@ -71,7 +71,7 @@ class ItemofHome extends React.Component {
         </Thumbnail>
         <h3>Thumbnail label</h3>
           <p>Description</p>
-          <p>
+          
           <Row>
             <Col md={6}>
             <Button bsStyle="primary" block>Follow</Button>
@@ -80,7 +80,7 @@ class ItemofHome extends React.Component {
             <Button bsStyle="default" block>Message</Button>
             </Col>
           </Row> 
-          </p>
+          
       </Popover>
     )
 
@@ -108,7 +108,7 @@ class ItemofHome extends React.Component {
               
           </Col>
           <Col md={10} xs={10}>
-            <p><strong className={styles.strong}><a href="#">Yoohoo</a></strong><span className={styles.middle}>, 我喜欢一个人，我想给她一个好的结局。</span><small className={styles.right}>2 hours ago</small></p>
+            <p><strong className={styles.strong}><a href="#">Yoohoo</a></strong><span className={styles.middle}>, 我喜欢一个人，我想给她一个好的结局。我喜欢一个人，我想给她一个好的结局。我喜欢一个人，我想给她一个好的结局。</span><small className={styles.right}>2 hours ago</small></p>
             <p>《one day》里的一句台词。“我无法控制自己对你的难以忘怀，可是我关于你的一切已经再也没有了期待。”</p>
             <p><small className={styles.fontsize}>latest post at 2016/08/08</small></p>
             <ButtonGroup justified>

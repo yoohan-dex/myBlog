@@ -30,23 +30,7 @@ export default class App extends React.Component { // eslint-disable-line react/
   render() {
     return (
       <div>
-
-        <NavBar/>
-        
-          <Grid>
-            <Row>
-              <Col md={12} xs={12}>
-              
-                {this.props.children}
-
-              </Col>
-            </Row>
-          </Grid>
-        
-
-
-
-
+        {this.props.children}
       </div>
     );
   }

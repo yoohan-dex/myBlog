@@ -7,13 +7,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import selectRegister from './selectors';
-import { changeUsername } from './actions';
+import { 
+  changeUsername,
+  changePassword,
+  changePassword2,
+  changeEmailaddress,
+  registerRequest,
+} from './actions';
 import RegisterBox from '../../components/RegisterBox'
 export class Register extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  constructor (props) {
+    super(props)
+
+    
+  }
+
   render() {
     return (
       <div>
-        <RegisterBox onUserChange={this.props.onChangeUsername}/>
+        <RegisterBox {...this.props}/>
       </div>
     );
   }
@@ -24,7 +37,12 @@ const mapStateToProps = selectRegister();
 function mapDispatchToProps(dispatch) {
   return {
     onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
-
+    onChangePassword: (evt) =>dispatch(changePassword(evt.target.value)),
+    onChangePassword2: (evt) =>dispatch(changePassword2(evt.target.value)),
+    onChangeEmailaddress: (evt) =>dispatch(changeEmailaddress(evt.target.value)),
+    onRegiterSubmit:(username,emailaddress, password ) =>{
+      dispatch(registerRequest({username,emailaddress,password }))
+    },
     dispatch,
   };
 }

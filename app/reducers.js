@@ -41,10 +41,17 @@ function routeReducer(state = routeInitialState, action) {
  * Creates the main reducer with the asynchronously loaded ones
  */
 import registerReducer from 'containers/Register/reducer';
+import homeItemPageReducer from 'containers/HomeItemPage/reducer';
+import homePageReducer from 'containers/HomePage/reducer';
+
+import loginReducer from 'containers/Login/reducer';
 export default function createReducer(asyncReducers) {
   return combineReducers({
     route: routeReducer,
     register: registerReducer,
+    homeItemPage: homeItemPageReducer,
+    homePage: homePageReducer,
+    login: loginReducer,
     ...asyncReducers,
   });
 }

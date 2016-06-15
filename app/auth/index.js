@@ -17,13 +17,17 @@ let auth = {
   * @param  {string} password The password of the user
   */
   login (username, password) {
-    if (auth.loggedIn()) return Promise.resolve(true)
-
+    if (auth.loggedIn()) {
+      console.log('you have login')
+      return Promise.resolve(true)
+    }
     // Post a fake request
     return request.post('/login', {username, password})
       .then(response => {
         // Save token to local storage
         localStorage.token = response.token
+        console.log('login scueess')
+        console.log(response.token)
         return Promise.resolve(true)
       })
   },

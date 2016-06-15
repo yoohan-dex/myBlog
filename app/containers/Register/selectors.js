@@ -12,6 +12,19 @@ const selectUsername = () => createSelector(
   selectRegisterDomain(),
   (registerState) => registerState.get('username')
 );
+const selectPassword = () => createSelector(
+  selectRegisterDomain(),
+  (registerState) => registerState.get('password')
+);
+
+const selectPassword2 = () => createSelector(
+  selectRegisterDomain(),
+  (registerState) => registerState.get('password2')
+);
+const selectEmailaddress = () => createSelector(
+  selectRegisterDomain(),
+  (registerState) => registerState.get('emailaddress')
+);
 
 /**
  * Default selector used by Register
@@ -20,6 +33,7 @@ const selectUsername = () => createSelector(
 const selectRegister = () => createSelector(
   selectRegisterDomain(),
   selectUsername(),
+  selectPassword(),
 
   (substate) => substate.toJS()
 );
@@ -28,4 +42,5 @@ export default selectRegister;
 export {
   selectRegisterDomain,
   selectUsername,
+  selectPassword,
 };
