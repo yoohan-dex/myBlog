@@ -9,21 +9,22 @@ import { connect } from 'react-redux';
 import selectHomeItemPage from './selectors';
 
 import LeftofHome from '../../components/LeftofHome';
-import JumbotronofHome from '../../components/JumbotronofHome';
 import ItemofHome from '../../components/ItemofHome';
-import RightofHome from '../../components/RightofHome';
+
 
 export class HomeItemPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div>
-      <LeftofHome>
-        <ItemofHome _id="y"/>
-        <ItemofHome _id="yo"/>
-        <ItemofHome _id="yoo"/>
-        <ItemofHome _id="yooo"/>
-        <ItemofHome _id="yoooo"/>
-      </LeftofHome>
+        <LeftofHome>
+          <h3>latest feeds</h3>
+          <hr />
+          <ItemofHome id="y" />
+          <ItemofHome id="yo" />
+          <ItemofHome id="yoo" />
+          <ItemofHome id="yooo" />
+          <ItemofHome id="yoooo" />
+        </LeftofHome>
       </div>
     );
   }

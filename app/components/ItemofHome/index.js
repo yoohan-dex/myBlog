@@ -4,108 +4,99 @@
 *
 */
 
-import React, { PropTypes }from 'react';
-import ReactDOM from 'react-dom'
-import { Panel, Row, Col, Thumbnail, Button, ButtonGroup, OverlayTrigger, Popover, Overlay} from 'react-bootstrap';
-import LitleProfile from '../LitleProfile';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Panel, Row, Col, Thumbnail, Button, ButtonGroup, Popover, Overlay } from 'react-bootstrap';
 import styles from './styles.css';
 
 class ItemofHome extends React.Component {
-  constructor(){
+  constructor() {
     super();
-    this.state={
-      show:false,
-      hover:false,
-      
-    }
-    this.over = this.over.bind(this)
-    this.out = this.out.bind(this)
-    this.hidden = this.hidden.bind(this)
-    this.hover=this.hover.bind(this)
-    this.leave=this.leave.bind(this)
+    this.state = {
+      show: false,
+      hover: false,
+    };
+    this.over = this.over.bind(this);
+    this.out = this.out.bind(this);
+    this.hidden = this.hidden.bind(this);
+    this.hover = this.hover.bind(this);
+    this.leave = this.leave.bind(this);
   }
-  over(){
+  over() {
     this.setState({
-      show:true
-    })
+      show: true,
+    });
   }
-  hover(){
-    this.setState({hover:true})
-    console.log(this.state.hover)
+  hover() {
+    this.setState({ hover: true });
   }
-  hidden(){
-    if(!this.state.hover){
+  hidden() {
+    if (!this.state.hover) {
       this.setState({
-      show:false,
-      hover:false
-    })
-    console.log('hoo')
-      }
+        show: false,
+        hover: false,
+      });
+    }
   }
-  leave(){
+  leave() {
     this.setState({
-      show:false,
-      hover:false
-    })
+      show: false,
+      hover: false,
+    });
   }
-  out(){ 
+  out() {
     setTimeout(this.hidden
-      ,300
-    )
+      , 300
+    );
   }
   render() {
-    const someStyle={
-      marginLeft:140
-    }
-    const url = 'http://tse1.mm.bing.net/th?id=OIP.M4bfbeaf5f2891afedd7018f997867bdfH0&pid=15.1'
+    const url = 'http://172.16.13.16:8999/duolaameng.jpg';
     let Pop = (
-      <Popover 
-       id={this.props._id}
-       onMouseOver={this.hover}
-       onMouseLeave={this.leave} >
-      
+      <Popover
+        id={this.props.id}
+        onMouseOver={this.hover}
+        onMouseLeave={this.leave}
+      >
+
         <Thumbnail
           bsStyle={styles.thumbnail}
           src={url}
-          alt="242x200">
-        </Thumbnail>
+          alt="242x200"
+        />
         <h3>Thumbnail label</h3>
-          <p>Description</p>
-          
-          <Row>
-            <Col md={6}>
+        <p>Description</p>
+
+        <Row>
+          <Col md={6}>
             <Button bsStyle="primary" block>Follow</Button>
-            </Col>
-            <Col md={6}>
+          </Col>
+          <Col md={6}>
             <Button bsStyle="default" block>Message</Button>
-            </Col>
-          </Row> 
-          
+          </Col>
+        </Row>
       </Popover>
-    )
+    );
 
     return (
       <Panel>
         <Row>
           <Col md={2} xs={2} >
-              <Thumbnail
-               ref={this.props._id}
-               href="#"
-               src={url}
-               alt="alright"
-               onMouseOver={this.over}
-               onMouseLeave={this.out}
-                />          
-              <Overlay
-               
-               show={this.state.show}
-               placement="right"
-               
-               target={() => ReactDOM.findDOMNode(this.refs[this.props._id])}
-               >
-               {Pop}
-              </Overlay>
-              
+            <Thumbnail
+              ref={this.props.id}
+              href="#"
+              src={url}
+              alt="alright"
+              onMouseOver={this.over}
+              onMouseLeave={this.out}
+            />
+            <Overlay
+              show={this.state.show}
+              placement="right"
+
+              target={() => ReactDOM.findDOMNode(this.refs[this.props.id])}
+            >
+              {Pop}
+            </Overlay>
           </Col>
           <Col md={10} xs={10}>
             <p><strong className={styles.strong}><a href="#">Yoohoo</a></strong><span className={styles.middle}>, 我喜欢一个人，我想给她一个好的结局。我喜欢一个人，我想给她一个好的结局。我喜欢一个人，我想给她一个好的结局。</span><small className={styles.right}>2 hours ago</small></p>
@@ -114,7 +105,7 @@ class ItemofHome extends React.Component {
             <ButtonGroup justified>
               <Button href="#">Commend</Button>
               <Button href="#">Share</Button>
-              <Button href="#">Like</Button>              
+              <Button href="#">Like</Button>
             </ButtonGroup>
           </Col>
         </Row>
@@ -122,7 +113,7 @@ class ItemofHome extends React.Component {
     );
   }
 }
-ItemofHome.PropTypes={
-  _id:PropTypes.string.isRequired,
-}
+ItemofHome.propTypes = {
+  id: React.PropTypes.string.isRequired,
+};
 export default ItemofHome;

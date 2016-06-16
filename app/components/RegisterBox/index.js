@@ -5,14 +5,18 @@
 */
 
 import React from 'react';
-import { Row, Col, FormGroup, ControlLabel, FormControl, Checkbox, Button} from 'react-bootstrap';
+import { Row, Col, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import styles from './styles.css';
 
 class RegisterBox extends React.Component {
 
-  constructor(){
-    super()
-    this._registerSubmit = this._registerSubmit.bind(this);
+  constructor() {
+    super();
+    this.registerSubmit = this.registerSubmit.bind(this);
+  }
+  registerSubmit(evt) {
+    evt.preventDefault();
+    this.props.onRegiterSubmit(this.props.username, this.props.emailaddress, this.props.password);
   }
 
   render() {
@@ -21,39 +25,45 @@ class RegisterBox extends React.Component {
         <Row>
           <Col md={4} mdOffset={4}>
             <h3>Registration</h3>
-            <hr/>
-            <form onSubmit={this._registerSubmit}>
+            <hr />
+            <form onSubmit={this.registerSubmit}>
               <FormGroup controlId="register-username">
                 <ControlLabel>Username</ControlLabel>
-                <FormControl type="text" 
-                placehold="input your name"
-                onChange={this.props.onChangeUsername}
+                <FormControl
+                  type="text"
+                  placehold="input your name"
+                  onChange={this.props.onChangeUsername}
                 />
               </FormGroup>
               <FormGroup controlId="register-email">
                 <ControlLabel>Email address</ControlLabel>
-                <FormControl type="email" 
-                placehold="input your Email"
-                onChange={this.props.onChangeEmailaddress}
+                <FormControl
+                  type="email"
+                  placehold="input your Email"
+                  onChange={this.props.onChangeEmailaddress}
                 />
               </FormGroup>
               <FormGroup controlId="register-password1">
                 <ControlLabel>Password</ControlLabel>
-                <FormControl type="password" 
-                placehold="input your password"
-                onChange={this.props.onChangePassword}
+                <FormControl
+                  type="password"
+                  placehold="input your password"
+                  onChange={this.props.onChangePassword}
                 />
               </FormGroup>
               <FormGroup controlId="register-password2">
                 <ControlLabel>Password again</ControlLabel>
-                <FormControl type="password" 
-                placehold="input your password"
-                onChange={this.props.onChangePassword2}
+                <FormControl
+                  type="password"
+                  placehold="input your password"
+                  
                 />
               </FormGroup>
-              <Button bsStyle="primary"
-              // disabled 
-              type="submit" block >
+              <Button
+                bsStyle="primary"
+              // disabled
+                type="submit" block
+              >
                 Submit
               </Button>
             </form>
@@ -62,10 +72,15 @@ class RegisterBox extends React.Component {
       </div>
     );
   }
-  _registerSubmit(evt){
-    evt.preventDefault()
-    this.props.onRegiterSubmit(this.props.username,this.props.emailaddress,this.props.password);
-  }
 }
+RegisterBox.propTypes = {
+  username: React.PropTypes.string.isRequired,
+  password: React.PropTypes.string.isRequired,
+  emailaddress: React.PropTypes.string.isRequired,
+  onRegiterSubmit: React.PropTypes.func.isRequired,
+  onChangeUsername: React.PropTypes.func.isRequired,
+  onChangeEmailaddress: React.PropTypes.func.isRequired,
+  onChangePassword: React.PropTypes.func.isRequired,
+};
 
 export default RegisterBox;

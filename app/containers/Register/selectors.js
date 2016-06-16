@@ -16,11 +16,6 @@ const selectPassword = () => createSelector(
   selectRegisterDomain(),
   (registerState) => registerState.get('password')
 );
-
-const selectPassword2 = () => createSelector(
-  selectRegisterDomain(),
-  (registerState) => registerState.get('password2')
-);
 const selectEmailaddress = () => createSelector(
   selectRegisterDomain(),
   (registerState) => registerState.get('emailaddress')
@@ -34,7 +29,7 @@ const selectRegister = () => createSelector(
   selectRegisterDomain(),
   selectUsername(),
   selectPassword(),
-
+  selectEmailaddress(),
   (substate) => substate.toJS()
 );
 

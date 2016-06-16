@@ -1,36 +1,32 @@
-import { take, call, put, select, fork } from 'redux-saga/effects';
-import { selectUsername } from './selectors'
+import { take, call, put, fork } from 'redux-saga/effects';
+
 
 
 // All sagas to be loaded
-import { SET_AUTH, } from '../HomePage/constants'
-import { REGISTER_REQUEST, } from './constants';
+import { SET_AUTH } from '../HomePage/constants';
+import { REGISTER_REQUEST } from './constants';
 
-import { authorize, forwardTo } from '../HomePage/sagas'
-export default [
-  authsagas,
-];
-
-// Individual exports for testing
-export function * authsagas() {
-  yield fork(registerFlow)
-}
+import { authorize, forwardTo } from '../HomePage/sagas';
 
 
-export function * registerFlow(){
-  while(true){
-    let request = yield take(REGISTER_REQUEST)
-    let { username, emailaddress, password, } =request.data;
 
-    
-    let wasSuccessful = yield call(authorize, {username, password, isRegistering: true})
-    console.log('wasSuccessful is '+wasSuccessful);
+export function * registerFlow() {
+  while (true) {
+    const request = yield take(REGISTER_REQUEST);
+    const { username, password } = request.data;
+
+
+    const wasSuccessful = yield call(authorize, { username, password, isRegistering: true });
     // If we could register a user, we send the appropiate actions
     if (wasSuccessful) {
-      console.log('wait for setAuth')
-      yield put({type: SET_AUTH, newAuthState: true})
-      console.log('wait for jump')
-      forwardTo('/') // Go to dashboard page
+      yield put({ type: SET_AUTH, newAuthState: true });
+      forwardTo('/'); // Go to dashboard page
     }
   }
 }
+export function * authsagas() {
+  yield fork(registerFlow);
+}
+export default [
+  authsagas,
+];

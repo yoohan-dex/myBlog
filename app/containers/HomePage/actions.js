@@ -17,16 +17,16 @@ export function defaultAction() {
     type: DEFAULT_ACTION,
   };
 }
-export function setAuthState (newAuthState) {
-  return {type: SET_AUTH, newAuthState}
+export function setAuthState(newAuthState) {
+  return { type: SET_AUTH, newAuthState };
 }
-export function sendingRequest (sending) {
-  return {type: SENDING_REQUEST, sending}
+export function sendingRequest(sending) {
+  return { type: SENDING_REQUEST, sending };
 }
-export function requestError (error) {
-  return {type: REQUEST_ERROR, error}
+export function requestError(error) {
+  return { type: REQUEST_ERROR, error };
 }
-export function logout () {
-  return {type: LOGOUT}
+export function logout() {
+  return { type: LOGOUT };
 }
 

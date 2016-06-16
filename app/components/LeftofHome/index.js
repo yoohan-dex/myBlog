@@ -5,19 +5,17 @@
 */
 
 import React from 'react';
-import { Row, Col} from 'react-bootstrap';
-import styles from './styles.css';
+import { Col } from 'react-bootstrap';
 
-class LeftofHome extends React.Component {
-  render() {
-    return (
-      
-        <Col md={8} sm={12} xs={12}>
-          {this.props.children}
-        </Col>
-      
-    );
-  }
+
+const LeftofHome = (props) => (
+  <Col md={8} sm={12} xs={12}>
+    {props.children}
+  </Col>
+);
+
+LeftofHome.propTypes = {
+  children: React.PropTypes.node.isRequired,
 }
 
 export default LeftofHome;

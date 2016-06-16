@@ -16,19 +16,19 @@ export function defaultAction() {
     type: DEFAULT_ACTION,
   };
 }
-export function changeUsername(username){
+export function changeUsername(username) {
   return {
-    type:CHANGE_USERNAME,
-    username
-  }
+    type: CHANGE_USERNAME,
+    username,
+  };
 }
 
-export function changePassword(password){
+export function changePassword(password) {
   return {
-    type:CHANGE_PASSWORD,
-    password
-  }
+    type: CHANGE_PASSWORD,
+    password,
+  };
 }
-export function loginRequest (data) {
-  return {type: LOGIN_REQUEST, data}
+export function loginRequest(data) {
+  return { type: LOGIN_REQUEST, data };
 }

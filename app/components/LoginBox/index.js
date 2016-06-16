@@ -5,13 +5,17 @@
 */
 
 import React from 'react';
-import { Row, Col, FormGroup, ControlLabel, FormControl, Checkbox, Button} from 'react-bootstrap';
+import { Row, Col, FormGroup, ControlLabel, FormControl, Checkbox, Button } from 'react-bootstrap';
 import styles from './styles.css';
 
 class LoginBox extends React.Component {
-  constructor(){
+  constructor() {
     super();
-    this._LoginSubmit = this._LoginSubmit.bind(this);
+    this.LoginSubmit = this.LoginSubmit.bind(this);
+  }
+  LoginSubmit(evt) {
+    evt.preventDefault();
+    this.props.onLoginSubmit(this.props.username, this.props.password);
   }
   render() {
     return (
@@ -19,21 +23,23 @@ class LoginBox extends React.Component {
         <Row>
           <Col md={4} mdOffset={4}>
             <h3>Login</h3>
-            <hr/>
-            <form onSubmit={this._LoginSubmit}>
+            <hr />
+            <form onSubmit={this.LoginSubmit}>
               <FormGroup controlId="register-username">
                 <ControlLabel>Username</ControlLabel>
-                <FormControl type="text" 
-                placehold="input your name"
-                onChange = {this.props.onChangeUsername}
+                <FormControl
+                  type="text"
+                  placehold="input your name"
+                  onChange={this.props.onChangeUsername}
                 />
               </FormGroup>
-              
+
               <FormGroup controlId="register-password1">
                 <ControlLabel>Password</ControlLabel>
-                <FormControl type="password" 
-                placehold="input your password"
-                onChange = {this.props.onChangePassword}
+                <FormControl
+                  type="password"
+                  placehold="input your password"
+                  onChange={this.props.onChangePassword}
                 />
               </FormGroup>
               <FormGroup>
@@ -50,12 +56,13 @@ class LoginBox extends React.Component {
       </div>
     );
   }
-
-_LoginSubmit(evt){
-  evt.preventDefault();
-  this.props.onLoginSubmit(this.props.username,this.props.password)
-} 
-
 }
+LoginBox.propTypes = {
+  username: React.PropTypes.string.isRequired,
+  password: React.PropTypes.string.isRequired,
+  onLoginSubmit: React.PropTypes.func.isRequired,
+  onChangeUsername: React.PropTypes.func.isRequired,
+  onChangePassword: React.PropTypes.func.isRequired,
+};
 
 export default LoginBox;
