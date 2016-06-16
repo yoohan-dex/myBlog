@@ -11,6 +11,7 @@ import {
   CHANGE_PASSWORD2,
   CHANGE_EMAILADDRESS,
   REGISTER_REQUEST,
+  REQUEST_ERROR,
 } from './constants';
 
 const initialState = fromJS({
@@ -18,7 +19,6 @@ const initialState = fromJS({
   emailaddress: '',
   password: '',
   password2: '',
-
 });
 
 function registerReducer(state = initialState, action) {
@@ -36,6 +36,10 @@ function registerReducer(state = initialState, action) {
       return state
       .set('emailaddress', action.emailaddress);
     case REGISTER_REQUEST:
+      return state;
+    case REQUEST_ERROR:
+      return state
+        .set('error', action.error);
     default:
       return state;
   }

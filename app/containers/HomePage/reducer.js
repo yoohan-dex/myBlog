@@ -15,6 +15,7 @@ import auth from '../../auth';
 
 const initialState = fromJS({
   loggedIn: auth.loggedIn(),
+  error: '',
 });
 
 function homePageReducer(state = initialState, action) {

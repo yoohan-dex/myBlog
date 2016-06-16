@@ -35,7 +35,7 @@ HomePage.propTypes = {
   children: React.PropTypes.node.isRequired,
   loggedIn: React.PropTypes.bool.isRequired,
   logout: React.PropTypes.func.isRequired,
-}
+};
 
 function mapDispatchToProps(dispatch) {
   return {

@@ -12,6 +12,11 @@ const selectLoggedInState = () => createSelector(
   selectHomePageDomain(),
   (homePageState) => homePageState.get('loggedIn')
 );
+
+const selectErrorState = () => createSelector(
+  selectHomePageDomain(),
+  (homePageState) => homePageState.get('error')
+);
 /**
  * Default selector used by HomePage
  */
@@ -19,10 +24,12 @@ const selectLoggedInState = () => createSelector(
 const selectHomePage = () => createSelector(
   selectHomePageDomain(),
   selectLoggedInState(),
+  selectErrorState(),
   (substate) => substate.toJS()
 );
 
 export default selectHomePage;
 export {
   selectHomePageDomain,
+  selectErrorState,
 };

@@ -15,9 +15,7 @@ import {
 
 
 // Individual exports for testing
-export function * homeSagas() {
-  yield fork(logoutFlow);
-}
+
 
 export function * authorize({ username, password, isRegistering }) {
   // We send an action that tells Redux we're sending a request
@@ -79,7 +77,9 @@ export function * logoutFlow() {
     forwardTo('/');
   }
 }
-
+export function * homeSagas() {
+  yield fork(logoutFlow);
+}
 export default [
   homeSagas,
 ];

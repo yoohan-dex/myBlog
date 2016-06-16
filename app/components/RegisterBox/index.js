@@ -4,22 +4,38 @@
 *
 */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Row, Col, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import styles from './styles.css';
 
 class RegisterBox extends React.Component {
-
   constructor() {
     super();
+    this.state = {
+      difference: false,
+      isEmpty: false,
+    };
     this.registerSubmit = this.registerSubmit.bind(this);
   }
+
+
   registerSubmit(evt) {
     evt.preventDefault();
-    this.props.onRegiterSubmit(this.props.username, this.props.emailaddress, this.props.password);
+    if (this.props.username.trim() && this.props.emailaddress.trim() && this.props.password.trim() !== '') {
+      this.props.onRegiterSubmit(this.props.username, this.props.emailaddress, this.props.password);
+    } else {
+      this.setState({
+        isEmpty: true,
+      });
+    }
   }
-
   render() {
+    let emptymessage = this.state.isEmpty ? (
+      <p>you have somethins didn't input</p>
+    ) : null;
+    let differencemessage = this.props.password !== this.props.password2 ? (
+      <p>your password look like not really correct</p>
+    ) : null;
     return (
       <div ClassName={styles.formbox}>
         <Row>
@@ -31,7 +47,7 @@ class RegisterBox extends React.Component {
                 <ControlLabel>Username</ControlLabel>
                 <FormControl
                   type="text"
-                  placehold="input your name"
+                  placeholder="input your name"
                   onChange={this.props.onChangeUsername}
                 />
               </FormGroup>
@@ -39,7 +55,9 @@ class RegisterBox extends React.Component {
                 <ControlLabel>Email address</ControlLabel>
                 <FormControl
                   type="email"
-                  placehold="input your Email"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  placeholder="input your Email"
                   onChange={this.props.onChangeEmailaddress}
                 />
               </FormGroup>
@@ -47,21 +65,23 @@ class RegisterBox extends React.Component {
                 <ControlLabel>Password</ControlLabel>
                 <FormControl
                   type="password"
-                  placehold="input your password"
+                  placeholder="input your password"
                   onChange={this.props.onChangePassword}
                 />
               </FormGroup>
+              {differencemessage}
               <FormGroup controlId="register-password2">
                 <ControlLabel>Password again</ControlLabel>
                 <FormControl
                   type="password"
-                  placehold="input your password"
-                  
+                  placeholder="input your password"
+                  onChange={this.props.onChangePassword2}
                 />
               </FormGroup>
+              {emptymessage}
               <Button
                 bsStyle="primary"
-              // disabled
+                disabled={this.props.password !== this.props.password2}
                 type="submit" block
               >
                 Submit
@@ -74,13 +94,15 @@ class RegisterBox extends React.Component {
   }
 }
 RegisterBox.propTypes = {
-  username: React.PropTypes.string.isRequired,
-  password: React.PropTypes.string.isRequired,
-  emailaddress: React.PropTypes.string.isRequired,
-  onRegiterSubmit: React.PropTypes.func.isRequired,
-  onChangeUsername: React.PropTypes.func.isRequired,
-  onChangeEmailaddress: React.PropTypes.func.isRequired,
-  onChangePassword: React.PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  password2: PropTypes.string.isRequired,
+  emailaddress: PropTypes.string.isRequired,
+  onRegiterSubmit: PropTypes.func.isRequired,
+  onChangeUsername: PropTypes.func.isRequired,
+  onChangeEmailaddress: PropTypes.func.isRequired,
+  onChangePassword: PropTypes.func.isRequired,
+  onChangePassword2: PropTypes.func.isRequired,
 };
 
 export default RegisterBox;
