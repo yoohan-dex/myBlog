@@ -20,7 +20,7 @@ export function * registerFlow() {
     // If we could register a user, we send the appropiate actions
     if (wasSuccessful) {
       yield put({ type: SET_AUTH, newAuthState: true });
-      forwardTo('/'); // Go to dashboard page
+      forwardTo('/afterlogin');
     }
   }
 }

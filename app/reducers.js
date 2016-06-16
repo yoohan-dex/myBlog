@@ -45,6 +45,7 @@ import homeItemPageReducer from 'containers/HomeItemPage/reducer';
 import homePageReducer from 'containers/HomePage/reducer';
 
 import loginReducer from 'containers/Login/reducer';
+import afterLoginReducer from 'containers/AfterLogin/reducer';
 export default function createReducer(asyncReducers) {
   return combineReducers({
     route: routeReducer,
@@ -52,6 +53,7 @@ export default function createReducer(asyncReducers) {
     homeItemPage: homeItemPageReducer,
     homePage: homePageReducer,
     login: loginReducer,
+    afterLogin: afterLoginReducer,
     ...asyncReducers,
   });
 }

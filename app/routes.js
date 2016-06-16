@@ -15,7 +15,30 @@ const loadModule = (cb) => (componentModule) => {
 export default function createRoutes(store) {
   // Create reusable async injectors using getHooks factory
   const { injectReducer, injectSagas } = getHooks(store);
+  function checkAuth(nextState, replace) {
+    const { loggedIn } = store.getState();
 
+  // Check if the path isn't dashboard. That way we can apply specific logic to
+  // display/render the path we want to
+    if (nextState.location.pathname !== '/afterlogin') {
+      if (loggedIn) {
+        if (nextState.location.state && nextState.location.pathname) {
+          replace(nextState.location.pathname);
+        } else {
+          replace('/');
+        }
+      }
+    } else {
+    // If the user is already logged in, forward them to the homepage
+      if (!loggedIn) {
+        if (nextState.location.state && nextState.location.pathname) {
+          replace(nextState.location.pathname);
+        } else {
+          replace('/');
+        }
+      }
+    }
+  }
   return [
     {
       path: '/',
@@ -37,70 +60,98 @@ export default function createRoutes(store) {
 
         importModules.catch(errorLoading);
       },
-      indexRoute:{
-          name: 'homeItemPage',
-          getComponent(nextState, cb) {
-            const importModules = Promise.all([
-              System.import('containers/HomeItemPage/reducer'),
-              System.import('containers/HomeItemPage/sagas'),
-              System.import('containers/HomeItemPage'),
-            ]);
-
-            const renderRoute = loadModule(cb);
-
-            importModules.then(([reducer, sagas, component]) => {
-              injectReducer('homeItemPage', reducer.default);
-              injectSagas(sagas.default);
-              renderRoute(component);
-            });
-
-            importModules.catch(errorLoading);
-          },
-        },
-      childRoutes:[
-      {
-        path: '/register',
-        name: 'register',
+      indexRoute: {
+        name: 'homeItemPage',
         getComponent(nextState, cb) {
           const importModules = Promise.all([
-            System.import('containers/Register/reducer'),
-            System.import('containers/Register/sagas'),
-            System.import('containers/Register'),
+            System.import('containers/HomeItemPage/reducer'),
+            System.import('containers/HomeItemPage/sagas'),
+            System.import('containers/HomeItemPage'),
           ]);
 
           const renderRoute = loadModule(cb);
 
           importModules.then(([reducer, sagas, component]) => {
-            injectReducer('register', reducer.default);
+            injectReducer('homeItemPage', reducer.default);
             injectSagas(sagas.default);
             renderRoute(component);
           });
 
           importModules.catch(errorLoading);
         },
-      },{
-        path: '/login',
-        name: 'login',
-        getComponent(nextState, cb) {
-          const importModules = Promise.all([
-            System.import('containers/Login/reducer'),
-            System.import('containers/Login/sagas'),
-            System.import('containers/Login'),
-          ]);
+      },
+      childRoutes: [
+        {
+          name: 'check',
+          onEnter: checkAuth,
+          childRoutes: [
+            {
+              path: '/register',
+              name: 'register',
+              getComponent(nextState, cb) {
+                const importModules = Promise.all([
+                  System.import('containers/Register/reducer'),
+                  System.import('containers/Register/sagas'),
+                  System.import('containers/Register'),
+                ]);
 
-          const renderRoute = loadModule(cb);
+                const renderRoute = loadModule(cb);
 
-          importModules.then(([reducer, sagas, component]) => {
-            injectReducer('login', reducer.default);
-            injectSagas(sagas.default);
-            renderRoute(component);
-          });
+                importModules.then(([reducer, sagas, component]) => {
+                  injectReducer('register', reducer.default);
+                  injectSagas(sagas.default);
+                  renderRoute(component);
+                });
 
-          importModules.catch(errorLoading);
+                importModules.catch(errorLoading);
+              },
+            }, {
+              path: '/login',
+              name: 'login',
+              getComponent(nextState, cb) {
+                const importModules = Promise.all([
+                  System.import('containers/Login/reducer'),
+                  System.import('containers/Login/sagas'),
+                  System.import('containers/Login'),
+                ]);
+
+                const renderRoute = loadModule(cb);
+
+                importModules.then(([reducer, sagas, component]) => {
+                  injectReducer('login', reducer.default);
+                  injectSagas(sagas.default);
+                  renderRoute(component);
+                });
+
+                importModules.catch(errorLoading);
+              },
+            }, {
+              path: 'afterlogin',
+              name: 'afterLogin',
+              getComponent(nextState, cb) {
+                const importModules = Promise.all([
+                  System.import('containers/AfterLogin/reducer'),
+                  System.import('containers/AfterLogin/sagas'),
+                  System.import('containers/AfterLogin'),
+                ]);
+
+                const renderRoute = loadModule(cb);
+
+                importModules.then(([reducer, sagas, component]) => {
+                  injectReducer('afterLogin', reducer.default);
+                  injectSagas(sagas.default);
+                  renderRoute(component);
+                });
+
+                importModules.catch(errorLoading);
+              },
+            },
+          ],
         },
-      },],
-    },  {
+      ],
+    }, {
       path: '*',
+
 
 
 
