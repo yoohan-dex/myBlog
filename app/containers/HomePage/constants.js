@@ -9,3 +9,5 @@ export const SENDING_REQUEST = 'app/HomePage/SENDING_REQUEST';
 export const REQUEST_ERROR = 'app/HomePage/REQUEST_ERROR';
 export const SET_AUTH = 'app/HomePage/SET_AUTH';
 export const LOGOUT = 'app/HomePage/LOGOUT';
+export const CLEAR_ERROR = 'app/HomePage/CLEAR_ERROR';
+

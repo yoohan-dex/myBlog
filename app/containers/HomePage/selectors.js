@@ -17,6 +17,8 @@ const selectErrorState = () => createSelector(
   selectHomePageDomain(),
   (homePageState) => homePageState.get('error')
 );
+
+
 /**
  * Default selector used by HomePage
  */
@@ -27,6 +29,7 @@ const selectHomePage = () => createSelector(
   selectErrorState(),
   (substate) => substate.toJS()
 );
+
 
 export default selectHomePage;
 export {

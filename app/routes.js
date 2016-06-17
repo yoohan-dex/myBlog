@@ -3,7 +3,7 @@
 // See http://blog.mxstbr.com/2016/01/react-apps-with-pages for more information
 // about the code splitting business
 import { getHooks } from 'utils/hooks';
-
+import { clearError } from './containers/HomePage/actions';
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
 };
@@ -17,6 +17,7 @@ export default function createRoutes(store) {
   const { injectReducer, injectSagas } = getHooks(store);
   function checkAuth(nextState, replace) {
     const { loggedIn } = store.getState();
+    store.dispatch(clearError());
 
   // Check if the path isn't dashboard. That way we can apply specific logic to
   // display/render the path we want to

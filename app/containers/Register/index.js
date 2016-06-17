@@ -7,6 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import selectRegister from './selectors';
+
 import {
   changeUsername,
   changePassword,

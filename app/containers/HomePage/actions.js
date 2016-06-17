@@ -10,6 +10,7 @@ import {
   SENDING_REQUEST,
   SET_AUTH,
   LOGOUT,
+  CLEAR_ERROR,
 } from './constants';
 
 export function defaultAction() {
@@ -28,5 +29,8 @@ export function requestError(error) {
 }
 export function logout() {
   return { type: LOGOUT };
+}
+export function clearError() {
+  return { type: CLEAR_ERROR };
 }
 

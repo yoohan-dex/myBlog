@@ -1,7 +1,7 @@
 import { hashSync } from 'bcryptjs';
 import genSalt from '../../auth/salt';
 import { browserHistory } from 'react-router';
-import { take, call, put, fork, race } from 'redux-saga/effects';
+import { take, call, put, fork } from 'redux-saga/effects';
 import auth from '../../auth';
 
 
@@ -11,6 +11,7 @@ import {
   LOGOUT,
   SET_AUTH,
 } from './constants';
+
 // All sagas to be loaded
 
 
@@ -20,7 +21,6 @@ import {
 export function * authorize({ username, password, isRegistering }) {
   // We send an action that tells Redux we're sending a request
   yield put({ type: SENDING_REQUEST, sending: true });
-
   // We then try to register or log in the user, depending on the request
   try {
     const salt = genSalt(username);

@@ -10,6 +10,7 @@ import {
   SET_AUTH,
   SENDING_REQUEST,
   REQUEST_ERROR,
+  CLEAR_ERROR,
 } from './constants';
 import auth from '../../auth';
 
@@ -28,9 +29,9 @@ function homePageReducer(state = initialState, action) {
     case SENDING_REQUEST:
       return state
         .set('currentlySending', action.sending);
-    case REQUEST_ERROR:
+    case CLEAR_ERROR:
       return state
-        .set('error', action.error);
+        .set('error', '');
     default:
       return state;
   }

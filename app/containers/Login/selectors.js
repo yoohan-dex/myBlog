@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-
 /**
  * Direct selector to the login state domain
  */
@@ -17,6 +16,11 @@ const selectPassword = () => createSelector(
   selectLoginDomain(),
   (loginState) => loginState.get('password')
 );
+const selectError = () => createSelector(
+  selectLoginDomain(),
+  (loginState) => loginState.get('error')
+);
+
 /**
  * Default selector used by Login
  */
@@ -25,6 +29,7 @@ const selectLogin = () => createSelector(
   selectLoginDomain(),
     selectUsername(),
     selectPassword(),
+    selectError(),
   (substate) => substate.toJS()
 );
 

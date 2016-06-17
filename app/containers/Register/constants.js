@@ -10,3 +10,4 @@ export const CHANGE_PASSWORD = 'app/Register/CHANGE_PASSWORD';
 export const CHANGE_PASSWORD2 = 'app/Register/CHANGE_PASSWORD2';
 export const CHANGE_EMAILADDRESS = 'app/Register/CHANGE_EMAILADDRESS';
 export const REGISTER_REQUEST = 'app/Register/REGISTER_REQUEST';
+export const REGISTER_REQUEST_ERROR = 'app/Register/REGISTER_REQUEST_ERROR';

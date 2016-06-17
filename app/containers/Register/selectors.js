@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { selectErrorState } from '../HomePage/selectors';
+
 /**
  * Direct selector to the register state domain
  */
@@ -35,7 +35,6 @@ const selectRegister = () => createSelector(
   selectPassword(),
   selectPassword2(),
   selectEmailaddress(),
-  selectErrorState(),
   (substate) => substate.toJS()
 );
 

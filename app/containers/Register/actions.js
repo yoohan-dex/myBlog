@@ -11,8 +11,6 @@ import {
   CHANGE_PASSWORD,
   CHANGE_PASSWORD2,
   REGISTER_REQUEST,
-  REQUEST_ERROR,
-  CLEAR_ERROR,
 } from './constants';
 
 export function defaultAction() {
@@ -50,4 +48,3 @@ export function registerRequest(data) {
     data,
   };
 }
-
