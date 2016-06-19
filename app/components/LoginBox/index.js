@@ -6,6 +6,7 @@
 
 import React, { PropTypes } from 'react';
 import { Row, Col, FormGroup, ControlLabel, FormControl, Checkbox, Button, Alert } from 'react-bootstrap';
+import Loading from 'react-loading';
 import styles from './styles.css';
 class LoginBox extends React.Component {
   constructor() {
@@ -14,12 +15,23 @@ class LoginBox extends React.Component {
   }
   LoginSubmit(evt) {
     evt.preventDefault();
-    this.props.onLoginSubmit(this.props.username, this.props.password);
+    this.props.onLoginSubmit(this.props.auth.username, this.props.auth.password);
   }
   render() {
-    let alertMessage = this.props.error ? (
-      <Alert bsStyle="warning"><strong>{this.props.error}</strong></Alert>
+    let { username, password } = this.props.auth;
+    let { error, onChangeUsername, onChangePassword } = this.props;
+
+    let alertMessage = error ? (
+      <Alert bsStyle="warning"><strong>{error}</strong></Alert>
     ) : null;
+    let submitButton = this.props.currentlySending ? (
+      <Col md={4} mdOffset={4} xs={4} xsOffset={4}>
+        <Loading type="bubbles" color="#e3e3e3" />
+      </Col>) : (
+      <Button bsStyle="primary" type="submit" block>
+        Submit
+      </Button>
+    );
     return (
       <div ClassName={styles.formbox}>
         <Row>
@@ -32,19 +44,19 @@ class LoginBox extends React.Component {
                 <ControlLabel>Username</ControlLabel>
                 <FormControl
                   type="text"
-                  value={this.props.username}
+                  value={username}
                   placehold="input your name"
-                  onChange={this.props.onChangeUsername}
+                  onChange={onChangeUsername}
                 />
               </FormGroup>
 
-              <FormGroup controlId="register-password1">
+              <FormGroup controlId="register-password">
                 <ControlLabel>Password</ControlLabel>
                 <FormControl
                   type="password"
-                  value={this.props.password}
+                  value={password}
                   placehold="input your password"
-                  onChange={this.props.onChangePassword}
+                  onChange={onChangePassword}
                 />
               </FormGroup>
               <FormGroup>
@@ -52,9 +64,7 @@ class LoginBox extends React.Component {
                   Remember me
                 </Checkbox>
               </FormGroup>
-              <Button bsStyle="primary" type="submit" block>
-                Submit
-              </Button>
+              {submitButton}
             </form>
           </Col>
         </Row>
@@ -63,12 +73,12 @@ class LoginBox extends React.Component {
   }
 }
 LoginBox.propTypes = {
-  username: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
+  auth: PropTypes.object,
   error: PropTypes.string,
-  onLoginSubmit: PropTypes.func.isRequired,
-  onChangeUsername: PropTypes.func.isRequired,
-  onChangePassword: PropTypes.func.isRequired,
+  currentlySending: PropTypes.bool,
+  onChangeUsername: PropTypes.func,
+  onChangePassword: PropTypes.func,
+  onLoginSubmit: PropTypes.func,
 };
 
 export default LoginBox;

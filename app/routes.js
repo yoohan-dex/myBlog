@@ -15,8 +15,11 @@ const loadModule = (cb) => (componentModule) => {
 export default function createRoutes(store) {
   // Create reusable async injectors using getHooks factory
   const { injectReducer, injectSagas } = getHooks(store);
+  function clearErrorMessage() {
+    store.dispatch(clearError());
+  }
   function checkAuth(nextState, replace) {
-    const { loggedIn } = store.getState();
+    const loggedIn = store.getState().getIn(['homePage', 'loggedIn']);
     store.dispatch(clearError());
 
   // Check if the path isn't dashboard. That way we can apply specific logic to
@@ -87,20 +90,17 @@ export default function createRoutes(store) {
           onEnter: checkAuth,
           childRoutes: [
             {
+              onEnter: clearErrorMessage,
               path: '/register',
               name: 'register',
               getComponent(nextState, cb) {
                 const importModules = Promise.all([
-                  System.import('containers/Register/reducer'),
-                  System.import('containers/Register/sagas'),
                   System.import('containers/Register'),
                 ]);
 
                 const renderRoute = loadModule(cb);
 
-                importModules.then(([reducer, sagas, component]) => {
-                  injectReducer('register', reducer.default);
-                  injectSagas(sagas.default);
+                importModules.then(([component]) => {
                   renderRoute(component);
                 });
 
@@ -109,18 +109,15 @@ export default function createRoutes(store) {
             }, {
               path: '/login',
               name: 'login',
+              onEnter: clearErrorMessage,
               getComponent(nextState, cb) {
                 const importModules = Promise.all([
-                  System.import('containers/Login/reducer'),
-                  System.import('containers/Login/sagas'),
                   System.import('containers/Login'),
                 ]);
 
                 const renderRoute = loadModule(cb);
 
-                importModules.then(([reducer, sagas, component]) => {
-                  injectReducer('login', reducer.default);
-                  injectSagas(sagas.default);
+                importModules.then(([component]) => {
                   renderRoute(component);
                 });
 
@@ -129,6 +126,7 @@ export default function createRoutes(store) {
             }, {
               path: 'afterlogin',
               name: 'afterLogin',
+              onEnter: clearErrorMessage,
               getComponent(nextState, cb) {
                 const importModules = Promise.all([
                   System.import('containers/AfterLogin/reducer'),

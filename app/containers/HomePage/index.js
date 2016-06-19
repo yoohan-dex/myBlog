@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import selectHomePage from './selectors';
 
@@ -32,9 +32,9 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
 const mapStateToProps = selectHomePage();
 
 HomePage.propTypes = {
-  children: React.PropTypes.node.isRequired,
-  loggedIn: React.PropTypes.bool.isRequired,
-  logout: React.PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+  loggedIn: PropTypes.bool,
+  logout: PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {

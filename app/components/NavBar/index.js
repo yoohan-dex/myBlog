@@ -33,7 +33,7 @@ const NavBar = (props) => {
       </Navbar.Header>
       <Navbar.Collapse>
         <Nav>
-          <LinkContainer to="/discovery"><NavItem>DISCOVERY</NavItem></LinkContainer>
+          <LinkContainer to="/afterlogin"><NavItem>DISCOVERY</NavItem></LinkContainer>
           <NavItem eventKey={2} href="#">LAYOUT</NavItem>
         </Nav>
         {navButton}

@@ -6,8 +6,8 @@
 
 import React, { PropTypes } from 'react';
 import { Row, Col, FormGroup, ControlLabel, FormControl, Button, Alert } from 'react-bootstrap';
+import Loading from 'react-loading';
 import styles from './styles.css';
-
 class RegisterBox extends React.Component {
   constructor() {
     super();
@@ -21,8 +21,12 @@ class RegisterBox extends React.Component {
 
   registerSubmit(evt) {
     evt.preventDefault();
-    if (this.props.username.trim() && this.props.emailaddress.trim() && this.props.password.trim() !== '') {
-      this.props.onRegiterSubmit(this.props.username, this.props.emailaddress, this.props.password);
+    const { username, password, emailaddress } = this.props.auth;
+    if (username.trim() && emailaddress.trim() && password.trim() !== '') {
+      this.setState({
+        isEmpty: false,
+      });
+      this.props.onRegiterSubmit(username, emailaddress, password);
     } else {
       this.setState({
         isEmpty: true,
@@ -30,15 +34,31 @@ class RegisterBox extends React.Component {
     }
   }
   render() {
+    let { username, password, password2, emailaddress } = this.props.auth;
+    let { error, onChangeUsername, onChangeEmailaddress, onChangePassword, onChangePassword2 } = this.props;
     let emptymessage = this.state.isEmpty ? (
       <Alert bsStyle="warning"><strong>you have somethins didn't input</strong></Alert>
     ) : null;
-    let differencemessage = this.props.password !== this.props.password2 ? (
+    let differencemessage = password !== password2 ? (
       <Alert bsStyle="warning"><strong>your password look like not really correct</strong></Alert>
     ) : null;
-    let alertMessage = this.props.error ? (
-      <Alert bsStyle="warning"><strong>{this.props.error}</strong></Alert>
+    let alertMessage = error ? (
+      <Alert bsStyle="warning"><strong>{error}</strong></Alert>
     ) : null;
+    let submitButton = this.props.currentlySending ? (
+      <Col md={4} mdOffset={4} xs={4} xsOffset={4}>
+        <Loading type="bubbles" color="#e3e3e3" />
+        {console.log('loading')}
+      </Col>) : (
+      <Button
+        bsStyle="primary"
+        disabled={password !== password2}
+        type="submit" block
+      >
+      {console.log('button')}
+      Submit
+      </Button>
+    );
     return (
       <div ClassName={styles.formbox}>
         <Row>
@@ -51,29 +71,26 @@ class RegisterBox extends React.Component {
                 <ControlLabel>Username</ControlLabel>
                 <FormControl
                   type="text"
-                  value={this.props.username}
-                  placeholder="input your name"
-                  onChange={this.props.onChangeUsername}
+                  value={username}
+                  onChange={onChangeUsername}
                 />
               </FormGroup>
               <FormGroup controlId="register-email">
                 <ControlLabel>Email address</ControlLabel>
                 <FormControl
                   type="email"
-                  value={this.props.emailaddress}
+                  value={emailaddress}
                   autoCorrect="off"
                   autoCapitalize="off"
-                  placeholder="input your Email"
-                  onChange={this.props.onChangeEmailaddress}
+                  onChange={onChangeEmailaddress}
                 />
               </FormGroup>
-              <FormGroup controlId="register-password1">
+              <FormGroup controlId="register-password">
                 <ControlLabel>Password</ControlLabel>
                 <FormControl
                   type="password"
-                  value={this.props.password}
-                  placeholder="input your password"
-                  onChange={this.props.onChangePassword}
+                  value={password}
+                  onChange={onChangePassword}
                 />
               </FormGroup>
               {differencemessage}
@@ -81,19 +98,13 @@ class RegisterBox extends React.Component {
                 <ControlLabel>Password again</ControlLabel>
                 <FormControl
                   type="password"
-                  value={this.props.password2}
-                  placeholder="input your password"
-                  onChange={this.props.onChangePassword2}
+                  value={password2}
+                  onChange={onChangePassword2}
                 />
               </FormGroup>
               {emptymessage}
-              <Button
-                bsStyle="primary"
-                disabled={this.props.password !== this.props.password2}
-                type="submit" block
-              >
-                Submit
-              </Button>
+              {submitButton}
+
             </form>
           </Col>
         </Row>
@@ -101,17 +112,16 @@ class RegisterBox extends React.Component {
     );
   }
 }
+
 RegisterBox.propTypes = {
-  username: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  password2: PropTypes.string.isRequired,
-  emailaddress: PropTypes.string.isRequired,
+  auth: PropTypes.object,
   error: PropTypes.string,
-  onRegiterSubmit: PropTypes.func.isRequired,
-  onChangeUsername: PropTypes.func.isRequired,
-  onChangeEmailaddress: PropTypes.func.isRequired,
-  onChangePassword: PropTypes.func.isRequired,
-  onChangePassword2: PropTypes.func.isRequired,
+  currentlySending: PropTypes.bool,
+  onChangeUsername: PropTypes.func,
+  onChangeEmailaddress: PropTypes.func,
+  onChangePassword: PropTypes.func,
+  onChangePassword2: PropTypes.func,
+  onRegiterSubmit: PropTypes.func,
 };
 
 export default RegisterBox;

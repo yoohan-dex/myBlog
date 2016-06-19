@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import selectRegister from './selectors';
+import { authSelector } from '../HomePage/selectors';
 
 import {
   changeUsername,
@@ -14,7 +14,7 @@ import {
   changePassword2,
   changeEmailaddress,
   registerRequest,
-} from './actions';
+} from '../HomePage/actions';
 import RegisterBox from '../../components/RegisterBox';
 export class Register extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -26,7 +26,7 @@ export class Register extends React.Component { // eslint-disable-line react/pre
   }
 }
 
-const mapStateToProps = selectRegister();
+const mapStateToProps = authSelector();
 
 function mapDispatchToProps(dispatch) {
   return {

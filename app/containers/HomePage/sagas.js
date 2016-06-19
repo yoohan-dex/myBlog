@@ -1,15 +1,17 @@
 import { hashSync } from 'bcryptjs';
 import genSalt from '../../auth/salt';
 import { browserHistory } from 'react-router';
-import { take, call, put, fork } from 'redux-saga/effects';
+import { take, call, put, fork, race } from 'redux-saga/effects';
 import auth from '../../auth';
-
 
 import {
   SENDING_REQUEST,
   REQUEST_ERROR,
   LOGOUT,
   SET_AUTH,
+  LOGIN_REQUEST,
+  REGISTER_REQUEST,
+  RESET_FORM,
 } from './constants';
 
 // All sagas to be loaded
@@ -47,6 +49,9 @@ export function * authorize({ username, password, isRegistering }) {
     yield put({ type: SENDING_REQUEST, sending: false });
   }
 }
+function forwardTo(location) {
+  browserHistory.push(location);
+}
 export function * logout() {
   // We tell Redux we're in the middle of a request
   yield put({ type: SENDING_REQUEST, sending: true });
@@ -64,8 +69,52 @@ export function * logout() {
   }
   return 0;
 }
-export function forwardTo(location) {
-  browserHistory.push(location);
+export function * loginFlow() {
+  // Because sagas are generators, doing `while (true)` doesn't block our program
+  // Basically here we say "this saga is always listening for actions"
+  while (true) {
+    // And we're listening for `LOGIN_REQUEST` actions and destructuring its payload
+    const request = yield take(LOGIN_REQUEST);
+    const { username, password } = request.auth;
+
+    // A `LOGOUT` action may happen while the `authorize` effect is going on, which may
+    // lead to a race condition. This is unlikely, but just in case, we call `race` which
+    // returns the "winner", i.e. the one that finished first
+    const winner = yield race({
+      auth: call(authorize, { username, password, isRegistering: false }),
+      logout: take(LOGOUT),
+    });
+
+    // If `authorize` was the winner...
+    if (winner.auth) {
+      // ...we send Redux appropiate actions
+      yield put({ type: SET_AUTH, newAuthState: true }); // User is logged in (authorized)
+      yield put({ type: RESET_FORM });
+      forwardTo('/afterlogin');
+      // If `logout` won...
+    } else if (winner.logout) {
+      // ...we send Redux appropiate action
+      yield put({ type: SET_AUTH, newAuthState: false }); // User is not logged in (not authorized)
+      yield call(logout); // Call `logout` effect
+      forwardTo('/');
+    }
+  }
+}
+
+export function * registerFlow() {
+  while (true) {
+    const request = yield take(REGISTER_REQUEST);
+    const { username, password } = request.auth;
+
+
+    const wasSuccessful = yield call(authorize, { username, password, isRegistering: true });
+    // If we could register a user, we send the appropiate actions
+    if (wasSuccessful) {
+      yield put({ type: SET_AUTH, newAuthState: true });
+      yield put({ type: RESET_FORM });
+      forwardTo('/afterlogin');
+    }
+  }
 }
 
 export function * logoutFlow() {
@@ -78,7 +127,9 @@ export function * logoutFlow() {
   }
 }
 export function * homeSagas() {
+  yield fork(loginFlow);
   yield fork(logoutFlow);
+  yield fork(registerFlow);
 }
 export default [
   homeSagas,
