@@ -1,3 +1,13 @@
 # myBlog
+Until now finish a great login flow with redux,reselect,saga, 
 
-##npm start to run  
+## Deploy
+
+```npm insatll```
+```npm start```
+
+
+
+
+
+
