@@ -8,6 +8,7 @@ import React, { PropTypes } from 'react';
 import { Row, Col, FormGroup, ControlLabel, FormControl, Checkbox, Button, Alert } from 'react-bootstrap';
 import Loading from 'react-loading';
 import styles from './styles.css';
+
 class LoginBox extends React.Component {
   constructor() {
     super();

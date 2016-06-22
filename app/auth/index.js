@@ -1,4 +1,4 @@
-import request from './fakeRequest';
+import request from '../utils/request';
 const localStorageyes = require('localStorage');
 let localStorage;
 
@@ -16,23 +16,37 @@ const auth = {
   * @param  {string} username The username of the user
   * @param  {string} password The password of the user
   */
+  header: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
   login(username, password) {
-    if (auth.loggedIn()) {
-      return Promise.resolve(true);
-    }
+    // if (auth.loggedIn()) {
+    //   console.log('auth.loggedIn is true');
+    //   return Promise.resolve(true);
+    // }
     // Post a fake request
-    return request.post('/login', { username, password })
+    return request('/api/login', {
+      method: 'post',
+      headers: auth.header,
+      body: JSON.stringify({ username, password }),
+    })
       .then(response => {
         // Save token to local storage
-        localStorage.token = response.token;
+        console.log(response);
+        localStorage.token = response.data.username;
         return Promise.resolve(true);
       });
   },
   /**
-  * Logs the current user out
+  * Logs the current user out localStorage.removeItem('token')
   */
   logout() {
-    return request.post('/logout');
+    return request('/api/logout').then(data => {
+      if (data.data.logout) {
+        localStorage.removeItem('token');
+      }
+    });
   },
   /**
   * Checks if a user is logged in
@@ -47,9 +61,14 @@ const auth = {
   */
   register(username, password) {
     // Post a fake request
-    return request.post('/register', { username, password })
+    return request('/api/register', {
+      method: 'post',
+      headers: auth.header,
+      body: JSON.stringify({ username, password }),
+    })
       // Log user in after registering
-      .then(() => auth.login(username, password));
+      .then(data => data.data.account.username
+         );
   },
   onChange() {},
 };

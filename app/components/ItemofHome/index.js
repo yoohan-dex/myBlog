@@ -50,7 +50,7 @@ class ItemofHome extends React.Component {
     );
   }
   render() {
-    const url = 'http://localhost:8999/duolaameng.jpg';
+    const url = 'http://localhost:9091/duolaameng.jpg';
     let Pop = (
       <Popover
         id={this.props.id}

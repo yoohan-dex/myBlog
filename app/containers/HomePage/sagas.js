@@ -94,7 +94,7 @@ export function * loginFlow() {
       // If `logout` won...
     } else if (winner.logout) {
       // ...we send Redux appropiate action
-      yield put({ type: SET_AUTH, newAuthState: false }); // User is not logged in (not authorized)
+      // yield put({ type: SET_AUTH, newAuthState: false }); // User is not logged in (not authorized)
       yield call(logout); // Call `logout` effect
       forwardTo('/');
     }
@@ -109,10 +109,11 @@ export function * registerFlow() {
 
     const wasSuccessful = yield call(authorize, { username, password, isRegistering: true });
     // If we could register a user, we send the appropiate actions
+    console.log(`wasSuccessful is ${wasSuccessful}`);
     if (wasSuccessful) {
-      yield put({ type: SET_AUTH, newAuthState: true });
+      // yield put({ type: SET_AUTH, newAuthState: true });
       yield put({ type: RESET_FORM });
-      forwardTo('/afterlogin');
+      // forwardTo('/afterlogin');
     }
   }
 }
